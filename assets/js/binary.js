@@ -1,4 +1,4 @@
-// meta={"simUrl":"https://trg-arcade.userpxt.io/v1.0.16/---simulator","cdnUrl":"https://pxt.azureedge.net","version":"1.1.0","target":"arcade","targetVersion":"1.0.16","repo":"microsoft/arcade-text"}
+// meta={"simUrl":"https://trg-arcade.userpxt.io/v1.0.16/---simulator","cdnUrl":"https://pxt.azureedge.net","version":"1.0.1","target":"arcade","targetVersion":"1.0.16","repo":"microsoft/arcade-text"}
 // total=1423608 new=7.27% cached=87.18% other=5.55%
 (function (ectx) {
 'use strict';
@@ -452,7 +452,7 @@ const pxsim_pxtrt = pxsim.pxtrt;
 const pxsim_numops = pxsim.numops;
 
 
-function _main___P61989(s) {
+function _main___P62019(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -463,8 +463,8 @@ switch (step) {
   case 0:
 
     s.h___48946 = undefined;
-    s.unnamed474___U1 = undefined;
-    s.unnamed475___U2 = undefined;
+    s.unnamed478___U1 = undefined;
+    s.unnamed479___U2 = undefined;
     globals._intervals___46670 = (undefined);
     globals._pollEventQueue___46679 = (undefined);
     globals.minPriority___43520 = (1);
@@ -861,15 +861,15 @@ switch (step) {
     globals.heights___46621 = (s.tmp_0);
     globals.y___46622 = (24);
     s.h___48946 = (undefined);
-    s.unnamed474___U1 = (globals.heights___46621);
-    s.unnamed475___U2 = (0);
+    s.unnamed478___U1 = (globals.heights___46621);
+    s.unnamed479___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed475___U2;
-    r0 = pxsim_Array__length(s.unnamed474___U1);
+    s.tmp_0 = r0 = s.unnamed479___U2;
+    r0 = pxsim_Array__length(s.unnamed478___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed474___U1, s.unnamed475___U2);
+    r0 = pxsim_Array__getAt(s.unnamed478___U1, s.unnamed479___U2);
     s.h___48946 = (r0);
     s.tmp_2 = textsprite_create__P46617_mk(s);
     s.tmp_2.arg0 = "水";
@@ -1001,22 +1001,22 @@ switch (step) {
     s.tmp_1 = r0;
     r0 = (s.tmp_0 + s.tmp_1);
     globals.y___46622 = (r0);
-    r0 = (s.unnamed475___U2 + 1);
-    s.unnamed475___U2 = (r0);
+    r0 = (s.unnamed479___U2 + 1);
+    s.unnamed479___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed474___U1 = (undefined);
+    s.unnamed478___U1 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
 } } }
-_main___P61989.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
-_main___P61989.continuations = [ 45 ]
+_main___P62019.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
+_main___P62019.continuations = [ 45 ]
 
-function _main___P61989_mk(s) {
+function _main___P62019_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: _main___P61989, depth: s.depth + 1,
+        parent: s, fn: _main___P62019, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -1025,8 +1025,8 @@ function _main___P61989_mk(s) {
   tmp_4: undefined,
   tmp_5: undefined,
   h___48946: undefined,
-  unnamed474___U1: undefined,
-  unnamed475___U2: undefined,
+  unnamed478___U1: undefined,
+  unnamed479___U2: undefined,
 } }
 
 const _hex46731 = pxsim.BufferMethods.createBufferFromHex("1f00210023002500270029002c002e003100340037003a003e004100450049004e00520057005c00620068006e0075007b0083008b0093009c00a500af00b900c400d000dc00e900f70006011501260137014a015d01720188019f01b801d201ee010b022a024b026e029302ba02e40210033f037003a403dc03170455049704dd0427057505c80520067d06e0064907b8072d08a9082d09b9094d0aea0a900b400cfa0cc00d910e6f0f5a1053115b1272139a14d41520178018f519801b231dde1e")
@@ -48527,5 +48527,5 @@ const effects_SceneAnchor__C47419_VT = mkVTable({
 
 const breakpoints = setupDebugger(1, ["Text___46606","heights___46621","s1___46620","y___46622","s2___46619","s3___46618"])
 
-return _main___P61989
+return _main___P62019
 })
