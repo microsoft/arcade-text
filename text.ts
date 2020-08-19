@@ -113,7 +113,7 @@ namespace textsprite {
         bg: number = 0,
         fg: number = 1,
     ): TextSprite {
-        const sprite = new TextSprite(text, bg, fg, 12, 0, 0, 0);
+        const sprite = new TextSprite(text, bg, fg, 8, 0, 0, 0);
         return sprite;
     }
 }
