@@ -3,18 +3,6 @@ namespace SpriteKind {
     export const Text = SpriteKind.create();
 }
 
-function getFontForTextAndHeight(text: string, maxHeight: number): image.Font {
-    const baseFont = image.getFontForText(text)
-    const hasUnicode = baseFont.charHeight === 12  // this is a hack
-    const availableFonts: image.Font[] = hasUnicode 
-        ? [baseFont] 
-        : [image.font8, image.font5] // 8 and 5 are generally better fonts than 12
-    const remainders = availableFonts.map(s => maxHeight % s.charHeight)
-    const fontIdx = remainders.reduce((p, n, i) => remainders[p] <= n ? p : i, 99)
-    const font = availableFonts[fontIdx]
-    return image.scaledFont(font, maxHeight / font.charHeight)
-}
-
 //% blockNamespace="textsprite"
 //% blockGap=8
 class TextSprite extends Sprite {
@@ -37,7 +25,7 @@ class TextSprite extends Sprite {
         const iconWidth = this.icon ? this.icon.width : 0;
         const iconHeight = this.icon ? this.icon.height : 0;
         const borderAndPadding = this.borderWidth + this.padding;
-        const font = getFontForTextAndHeight(this.text, this.maxFontHeight);        
+        const font = textsprite.getFontForTextAndHeight(this.text, this.maxFontHeight);        
         const width = iconWidth + font.charWidth * this.text.length + 2 * borderAndPadding;
         const height = Math.max(iconHeight, font.charHeight) + 2 * borderAndPadding;
         const img = image.create(width, height);
@@ -45,7 +33,7 @@ class TextSprite extends Sprite {
         img.fillRect(this.borderWidth, this.borderWidth, width - this.borderWidth * 2, height - this.borderWidth * 2, this.bg)
         if (this.icon) {
             const iconHeightOffset = (height - iconHeight) / 2
-            renderScaledImage(this.icon, img, borderAndPadding, iconHeightOffset)
+            textsprite.renderScaledImage(this.icon, img, borderAndPadding, iconHeightOffset)
         }
         const textHeightOffset = (height - font.charHeight) / 2
         img.print(this.text, iconWidth + borderAndPadding, textHeightOffset, this.fg, font);
@@ -79,24 +67,36 @@ class TextSprite extends Sprite {
     }
 }
 
-// TODO: downscale and upscale icons?
-function renderScaledImage(source: Image, destination: Image, x: number, y: number, downScalePowerOfTwo: number = 0) {
-    const scale = downScalePowerOfTwo;
-    const tile = source
-    for (let i = 0; i < source.width; i += 1 << scale) {
-        for (let j = 0; j < source.height; j += 1 << scale) {
-            if (source.getPixel(i, j) != 0) {
-                destination.setPixel(x + (i >> scale), y + (j >> scale), source.getPixel(i, j))
-            }
-        }
-    }
-}
-
 //% color=#3e99de
 //% icon="\uf031"
 //% blockGap=8 block="Text Sprite"
 //% groups='["Create"]'
 namespace textsprite {
+
+    // TODO: downscale and upscale icons?
+    export function renderScaledImage(source: Image, destination: Image, x: number, y: number, downScalePowerOfTwo: number = 0) {
+        const scale = downScalePowerOfTwo;
+        const tile = source
+        for (let i = 0; i < source.width; i += 1 << scale) {
+            for (let j = 0; j < source.height; j += 1 << scale) {
+                if (source.getPixel(i, j) != 0) {
+                    destination.setPixel(x + (i >> scale), y + (j >> scale), source.getPixel(i, j))
+                }
+            }
+        }
+    }
+
+    export function getFontForTextAndHeight(text: string, maxHeight: number): image.Font {
+        const baseFont = image.getFontForText(text)
+        const hasUnicode = baseFont.charHeight === 12  // this is a hack
+        const availableFonts: image.Font[] = hasUnicode 
+            ? [baseFont] 
+            : [image.font8, image.font5] // 8 and 5 are generally better fonts than 12
+        const remainders = availableFonts.map(s => maxHeight % s.charHeight)
+        const fontIdx = remainders.reduce((p, n, i) => remainders[p] <= n ? p : i, 99)
+        const font = availableFonts[fontIdx]
+        return image.scaledFont(font, maxHeight / font.charHeight)
+    }
 
     //% block="text sprite $text || as $fg on $bg"
     //% blockId="textsprite_create"

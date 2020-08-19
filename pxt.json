@@ -1,18 +1,25 @@
 {
     "name": "arcade-text",
+    "version": "1.0.0",
+    "description": "",
     "dependencies": {
         "device": "*"
     },
-    "description": "",
     "files": [
         "main.blocks",
         "main.ts",
         "README.md",
         "text.ts"
     ],
-    "preferredEditor": "tsprj",
     "testFiles": [
         "test.ts"
     ],
-    "version": "1.0.0"
+    "targetVersions": {
+        "target": "1.0.16",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "tsprj"
 }
