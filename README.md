@@ -6,6 +6,8 @@ This extension allows you to create "text sprites" which are just sprites create
 
 Note that when unicode characters are in use, the font height used in text sprites will always be a multiple of 12px. Whereas otherwise we prefer to use multiples of height 8px or 5px fonts.
 
+<img width="416" alt="Screen Shot 2020-08-20 at 8 00 21 AM" src="https://user-images.githubusercontent.com/6453828/90789027-40137480-e2bb-11ea-81bd-440fa19abdc0.png">
+
 ## Use this extension
 
 This repository can be added as an **extension** in MakeCode.
