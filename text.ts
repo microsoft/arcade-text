@@ -18,6 +18,7 @@ class TextSprite extends Sprite {
     ) {
         super(image.create(0,0));
         this.setKind(SpriteKind.Text);
+        this.setFlag(SpriteFlag.Ghost, true);
         this.update()
     }
 
