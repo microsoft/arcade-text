@@ -114,6 +114,7 @@ namespace textsprite {
         fg: number = 1,
     ): TextSprite {
         const sprite = new TextSprite(text, bg, fg, 8, 0, 0, 0);
+        game.currentScene().physicsEngine.addSprite(sprite);
         return sprite;
     }
 }
