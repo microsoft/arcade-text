@@ -14,6 +14,8 @@ class TextSprite extends Sprite {
         public borderWidth: number,
         public borderColor: number,
         public padding: number,
+        public outlineWidth: number,
+        public outlineColor: number,
         public icon: Image = null,
     ) {
         super(image.create(0,0));
@@ -23,9 +25,9 @@ class TextSprite extends Sprite {
     }
 
     public update() {
-        const iconWidth = this.icon ? this.icon.width : 0;
+        const borderAndPadding = this.borderWidth + this.padding + this.outlineWidth;
+        const iconWidth = this.icon ? this.icon.width + this.padding + this.outlineWidth : 0;
         const iconHeight = this.icon ? this.icon.height : 0;
-        const borderAndPadding = this.borderWidth + this.padding;
         const font = textsprite.getFontForTextAndHeight(this.text, this.maxFontHeight);        
         const width = iconWidth + font.charWidth * this.text.length + 2 * borderAndPadding;
         const height = Math.max(iconHeight, font.charHeight) + 2 * borderAndPadding;
@@ -38,22 +40,30 @@ class TextSprite extends Sprite {
         }
         const textHeightOffset = (height - font.charHeight) / 2
         img.print(this.text, iconWidth + borderAndPadding, textHeightOffset, this.fg, font);
+        if (this.outlineWidth > 0)
+            textsprite.outlineOtherColor(img, this.fg, this.outlineWidth, this.outlineColor)
         this.setImage(img)        
     }
 
     //% block="set $this(textSprite) max font height $height"
+    //% group="Modify"
+    //% weight=50
     public setMaxFontHeight(height: number) {
         this.maxFontHeight = height
         this.update();
     }
 
     //% block="set $this(textSprite) icon $icon=screen_image_picker"
+    //% group="Modify"
+    //% weight=46
     public setIcon(icon: Image) {
         this.icon = icon
         this.update()
     }
 
     //% block="set $this(textSprite) text $text"
+    //% group="Modify"
+    //% weight=47
     public setText(text: string) {
         this.text = text || ""
         this.update()
@@ -63,18 +73,32 @@ class TextSprite extends Sprite {
     //% width.defl=1
     //% color.defl=6
     //% color.shadow="colorindexpicker"
+    //% group="Modify"
+    //% weight=48
     public setBorder(width: number, color: number, padding: number = 0) {
         this.borderWidth = Math.max(width, 0);
         this.borderColor = color;
         this.padding = Math.max(padding, 0);
         this.update()
     }
+
+    //% block="set $this(textSprite) outline $width $color"
+    //% width.defl=1
+    //% color.defl=6
+    //% color.shadow="colorindexpicker"
+    //% group="Modify"
+    //% weight=49
+    public setOutline(width: number, color: number) {
+        this.outlineWidth = Math.max(width, 0);
+        this.outlineColor = color;
+        this.update();
+    }
 }
 
 //% color=#3e99de
 //% icon="\uf031"
 //% blockGap=8 block="Text Sprite"
-//% groups='["Create"]'
+//% groups='["Create", "Modify"]'
 namespace textsprite {
 
     // TODO: downscale and upscale icons?
@@ -117,8 +141,38 @@ namespace textsprite {
         bg: number = 0,
         fg: number = 1,
     ): TextSprite {
-        const sprite = new TextSprite(text, bg, fg, 8, 0, 0, 0);
+        const sprite = new TextSprite(text, bg, fg, 8, 0, 0, 0, 0, 0);
         game.currentScene().physicsEngine.addSprite(sprite);
         return sprite;
+    }
+
+    export function outlineOtherColor(img: Image, targetColor: number, outlineWidth: number, outlineColor: number) {
+        let toOutlineX: number[] = [];
+        let toOutlineY: number[] = [];
+        for (let x = 0; x < img.width; x++) {
+            for (let y = 0; y < img.height; y++) {
+                for (let sx = 0; sx <= outlineWidth; sx++) {
+                    for (let sy = 0; sy <= outlineWidth; sy++) {
+                        if (sx + sy === 0)
+                            continue;
+                        if (img.getPixel(x, y) === targetColor)
+                            continue
+                        if (img.getPixel(x + sx, y + sy) === targetColor
+                            || img.getPixel(x - sx, y + sy) === targetColor
+                            || img.getPixel(x + sx, y - sy) === targetColor
+                            || img.getPixel(x - sx, y - sy) === targetColor
+                            ) {
+                            toOutlineX.push(x)
+                            toOutlineY.push(y)
+                        }
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < toOutlineX.length; i++) {
+            const x = toOutlineX[i]
+            const y = toOutlineY[i]
+            img.setPixel(x, y, outlineColor)
+        }
     }
 }
