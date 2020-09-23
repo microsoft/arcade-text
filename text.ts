@@ -59,7 +59,10 @@ class TextSprite extends Sprite {
         this.update()
     }
 
-    //% block="set $this(textSprite) border $width $color=colorindexpicker || and padding $padding"
+    //% block="set $this(textSprite) border $width $color || and padding $padding"
+    //% width.defl=1
+    //% color.defl=6
+    //% color.shadow="colorindexpicker"
     public setBorder(width: number, color: number, padding: number = 0) {
         this.borderWidth = Math.max(width, 0);
         this.borderColor = color;
